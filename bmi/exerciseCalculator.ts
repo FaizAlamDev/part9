@@ -9,9 +9,9 @@ interface Result {
 }
 
 const calculateExercises = (arr: number[], target: number): Result => {
-	let periodLength = arr.length;
+	const periodLength = arr.length;
 
-	let trainingDays: number = 0;
+	let trainingDays = 0;
 
 	arr.map((day) => {
 		if (day > 0) trainingDays++;
@@ -24,7 +24,7 @@ const calculateExercises = (arr: number[], target: number): Result => {
 	// 		then rating = 2
 	// Else
 	// 		rating = 1
-	let rating: number = 1;
+	let rating = 1;
 
 	if (
 		trainingDays / periodLength > 0.3 &&
@@ -44,14 +44,14 @@ const calculateExercises = (arr: number[], target: number): Result => {
 		ratingDescription = "perfect";
 	}
 
-	let average: number = 0;
+	let average = 0;
 	arr.map((day) => {
 		average += day;
 	});
 
 	average = average / periodLength;
 
-	let success = average >= target;
+	const success = average >= target;
 
 	return {
 		periodLength,
@@ -64,12 +64,14 @@ const calculateExercises = (arr: number[], target: number): Result => {
 	};
 };
 
-let target: number = Number(process.argv[2]);
+// const target = Number(process.argv[2]);
 
-let args: number[] = [];
+// const args: number[] = [];
 
-for (let i = 3; i < process.argv.length; i++) {
-	args[i - 3] = Number(process.argv[i]);
-}
+// for (let i = 3; i < process.argv.length; i++) {
+// 	args[i - 3] = Number(process.argv[i]);
+// }
 
-console.log(calculateExercises(args, target));
+// console.log(calculateExercises(args, target));
+
+export default calculateExercises;

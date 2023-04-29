@@ -1,5 +1,3 @@
-import { isNotNumber } from "./utils";
-
 interface Result {
   periodLength: number;
   trainingDays: number;
@@ -10,7 +8,10 @@ interface Result {
   average: number;
 }
 
-function calculateExercises(dailyArr: number[], target: number): Result {
+export default function calculateExercises(
+  dailyArr: number[],
+  target: number
+): Result {
   const periodLength = dailyArr.length;
 
   const trainingDays = dailyArr.filter((hours) => hours > 0).length;
@@ -36,26 +37,3 @@ function calculateExercises(dailyArr: number[], target: number): Result {
     average,
   };
 }
-
-const parseArguments = (args: string[]) => {
-  if (args.length < 4) throw new Error("Not Enough Arguments");
-
-  const target = args[2];
-  const dailyArr = args.slice(3);
-
-  if (isNotNumber(target)) {
-    throw new Error("Incorrect types");
-  }
-
-  if (dailyArr.some((val) => isNotNumber(val))) {
-    throw new Error("Incorrect types");
-  }
-  return {
-    target: Number(target),
-    dailyArr: dailyArr.map(Number),
-  };
-};
-
-const { target, dailyArr } = parseArguments(process.argv);
-
-console.log(calculateExercises(dailyArr, target));

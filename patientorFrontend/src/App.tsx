@@ -8,7 +8,7 @@ import { Patient } from "./types";
 
 import patientService from "./services/patients";
 import PatientListPage from "./components/PatientListPage";
-import PatientView from "./components/PatientView";
+import PatientViewPage from "./components/PatientViewPage";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -47,7 +47,7 @@ const App = () => {
           />
           <Route
             path="/patients/:id"
-            element={<PatientView id={patient?.id} />}
+            element={<PatientViewPage id={patient?.id} />}
           />
         </Routes>
       </Container>

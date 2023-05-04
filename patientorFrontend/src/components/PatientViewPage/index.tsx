@@ -1,10 +1,11 @@
 import { Container, Typography } from "@mui/material";
-import { Patient } from "../types";
+import { Patient } from "../../types";
 import { useEffect, useState } from "react";
-import patientService from "../services/patients";
+import patientService from "../../services/patients";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
+import EntryView from "./EntryView";
 
 const PatientView = ({ id }: { id: string | undefined }) => {
   const [patient, setPatient] = useState<Patient>();
@@ -32,6 +33,7 @@ const PatientView = ({ id }: { id: string | undefined }) => {
       </Typography>
       <p>ssn: {patient?.ssn}</p>
       <p>occupation: {patient?.occupation}</p>
+      <EntryView patient={patient} />
     </Container>
   );
 };

@@ -16,8 +16,10 @@ const EntryDetails = ({
           <div>{entry.date}</div>
           {children}
           <div>
-            discharged on {entry.discharge.date} on criteria "
-            {entry.discharge.criteria}"
+            <p>
+              discharged on {entry.discharge.date} on criteria "
+              {entry.discharge.criteria}"{" "}
+            </p>
           </div>
         </>
       );
@@ -28,6 +30,16 @@ const EntryDetails = ({
             {entry.date} {entry.employerName}
           </div>
           {children}
+          <div>
+            {entry.sickLeave ? (
+              <p>
+                SickLeave from: {entry.sickLeave.startDate} until:{" "}
+                {entry.sickLeave.endDate}{" "}
+              </p>
+            ) : (
+              <p>No Sick Leaves</p>
+            )}
+          </div>
         </>
       );
     case "HealthCheck":

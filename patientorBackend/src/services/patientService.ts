@@ -1,7 +1,13 @@
 import { v1 as uuid } from "uuid";
 import patientData from "../data/patients";
 
-import { NonSensitivePatient, Patient, newPatientEntry } from "../types";
+import {
+  Entry,
+  NonSensitivePatient,
+  Patient,
+  newEntry,
+  newPatientEntry,
+} from "../types";
 
 const getEntries = (): Patient[] => {
   return patientData;
@@ -17,7 +23,7 @@ const getNonSensitiveEntries = (): NonSensitivePatient[] => {
   }));
 };
 
-const addEntry = (entry: newPatientEntry): Patient => {
+const addPatientEntry = (entry: newPatientEntry): Patient => {
   const id = uuid();
 
   const newPatient = {
@@ -29,4 +35,23 @@ const addEntry = (entry: newPatientEntry): Patient => {
   return newPatient;
 };
 
-export default { getEntries, getNonSensitiveEntries, addEntry };
+const addEntryToPatient = (entry: newEntry, patientId: string): Entry => {
+  const id = uuid();
+
+  const newEntry = {
+    id,
+    ...entry,
+  };
+
+  const patient = patientData.find((p) => p.id === patientId);
+
+  patient?.entries.push(newEntry);
+  return newEntry;
+};
+
+export default {
+  getEntries,
+  getNonSensitiveEntries,
+  addPatientEntry,
+  addEntryToPatient,
+};

@@ -59,3 +59,9 @@ export type Patient = {
 export type newPatientEntry = Omit<Patient, "id">;
 
 export type NonSensitivePatient = Omit<Patient, "ssn" | "entries">;
+
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+
+export type newEntry = UnionOmit<Entry, "id">;

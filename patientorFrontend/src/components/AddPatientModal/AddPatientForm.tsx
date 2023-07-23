@@ -1,35 +1,45 @@
 import { useState, SyntheticEvent } from "react";
 
-import {  TextField, InputLabel, MenuItem, Select, Grid, Button, SelectChangeEvent } from '@mui/material';
+import {
+  TextField,
+  InputLabel,
+  MenuItem,
+  Select,
+  Grid,
+  Button,
+  SelectChangeEvent,
+} from "@mui/material";
 
-import { PatientFormValues, Gender } from "../../types";
+import { PatientFormValues, Gender, Entry } from "../../types";
 
 interface Props {
   onCancel: () => void;
   onSubmit: (values: PatientFormValues) => void;
 }
 
-interface GenderOption{
+interface GenderOption {
   value: Gender;
   label: string;
 }
 
-const genderOptions: GenderOption[] = Object.values(Gender).map(v => ({
-  value: v, label: v.toString()
+const genderOptions: GenderOption[] = Object.values(Gender).map((v) => ({
+  value: v,
+  label: v.toString(),
 }));
 
 const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
-  const [name, setName] = useState('');
-  const [occupation, setOccupation] = useState('');
-  const [ssn, setSsn] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [name, setName] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [ssn, setSsn] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState(Gender.Other);
+  const [entries, setEntries] = useState<Array<Entry>>([]);
 
   const onGenderChange = (event: SelectChangeEvent<string>) => {
     event.preventDefault();
-    if ( typeof event.target.value === "string") {
+    if (typeof event.target.value === "string") {
       const value = event.target.value;
-      const gender = Object.values(Gender).find(g => g.toString() === value);
+      const gender = Object.values(Gender).find((g) => g.toString() === value);
       if (gender) {
         setGender(gender);
       }
@@ -43,7 +53,8 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
       occupation,
       ssn,
       dateOfBirth,
-      gender
+      gender,
+      entries,
     });
   };
 
@@ -52,15 +63,17 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
       <form onSubmit={addPatient}>
         <TextField
           label="Name"
-          fullWidth 
+          fullWidth
           value={name}
           onChange={({ target }) => setName(target.value)}
+          style={{ margin: "5px 0" }}
         />
         <TextField
           label="Social security number"
           fullWidth
           value={ssn}
           onChange={({ target }) => setSsn(target.value)}
+          style={{ margin: "5px 0" }}
         />
         <TextField
           label="Date of birth"
@@ -68,12 +81,14 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
           fullWidth
           value={dateOfBirth}
           onChange={({ target }) => setDateOfBirth(target.value)}
+          style={{ margin: "5px 0" }}
         />
         <TextField
           label="Occupation"
           fullWidth
           value={occupation}
           onChange={({ target }) => setOccupation(target.value)}
+          style={{ margin: "5px 0" }}
         />
 
         <InputLabel style={{ marginTop: 20 }}>Gender</InputLabel>
@@ -83,14 +98,11 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
           value={gender}
           onChange={onGenderChange}
         >
-        {genderOptions.map(option =>
-          <MenuItem
-            key={option.label}
-            value={option.value}
-          >
-            {option.label
-          }</MenuItem>
-        )}
+          {genderOptions.map((option) => (
+            <MenuItem key={option.label} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
         </Select>
 
         <Grid>
@@ -98,7 +110,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
             <Button
               color="secondary"
               variant="contained"
-              style={{ float: "left" }}
+              style={{ float: "left", marginTop: "10px" }}
               type="button"
               onClick={onCancel}
             >
@@ -109,6 +121,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
             <Button
               style={{
                 float: "right",
+                marginTop: "10px",
               }}
               type="submit"
               variant="contained"

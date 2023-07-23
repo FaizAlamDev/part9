@@ -2,12 +2,17 @@ import {
   Diagnosis,
   Entry,
   Gender,
+  HealthCheckRating,
   newEntry as newEntryType,
   newPatientEntry,
 } from "./types";
 
 const isString = (text: unknown): text is string => {
   return typeof text === "string" || text instanceof String;
+};
+
+const isNumber = (value: unknown): value is number => {
+  return value != null && value !== "" && !isNaN(Number(value.toString()));
 };
 
 const parseName = (name: unknown): string => {
@@ -110,6 +115,22 @@ const parseDiagnosisCodes = (object: unknown): Array<Diagnosis["code"]> => {
   return object.diagnosisCodes as Array<Diagnosis["code"]>;
 };
 
+const isHealthCheckRating = (param: number): param is HealthCheckRating => {
+  return Object.values(HealthCheckRating)
+    .map((v) => Number(v))
+    .includes(param);
+};
+
+const parseHealthCheckRating = (
+  healthCheckRating: unknown
+): HealthCheckRating => {
+  if (!isNumber(healthCheckRating) || !isHealthCheckRating(healthCheckRating)) {
+    throw new Error("Incorrect or missing healthCheckRating");
+  }
+
+  return healthCheckRating;
+};
+
 export const toNewEntry = (object: unknown): newEntryType => {
   if (!object || typeof object !== "object") {
     throw new Error("Incorrect or missing data");
@@ -149,8 +170,12 @@ export const toNewEntry = (object: unknown): newEntryType => {
         throw new Error("Incorrect or missing healthCheckRating");
       }
 
+      const healthCheckRating = parseHealthCheckRating(
+        object.healthCheckRating
+      );
+
       returnedObject.type = object.type;
-      returnedObject.healthCheckRating = object.healthCheckRating;
+      returnedObject.healthCheckRating = healthCheckRating;
     }
 
     if (object.type === "OccupationalHealthcare") {

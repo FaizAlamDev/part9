@@ -18,8 +18,10 @@ const EntryView = ({ patient }: { patient: Patient | undefined }) => {
 
   return (
     <>
-      <Typography variant="h5">entries</Typography>
-      {patient?.entries.map((entry) => {
+      <Typography variant="h5" marginTop="20px">
+        Entries
+      </Typography>
+      {patient?.entries?.map((entry) => {
         return (
           <Card
             key={entry.id}

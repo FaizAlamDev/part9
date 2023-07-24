@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import SelectInput from "./SelectInput";
 
 interface Props {
   onCancel: () => void;
@@ -90,7 +91,9 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
         />
 
         <TextField
+          type="date"
           label="*Date"
+          InputLabelProps={{ shrink: true }}
           fullWidth
           value={date}
           onChange={({ target }) => setDate(target.value)}
@@ -104,30 +107,34 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
           style={{ margin: "5px 0" }}
         />
 
-        <TextField
-          label="Diagnosis Codes"
-          fullWidth
-          value={diagnosisCodes}
-          onChange={({ target }) =>
-            setDiagnosisCodes(target.value.replace(/\s/g, "").split(","))
-          }
-          style={{ margin: "5px 0" }}
+        <SelectInput
+          diagnosisCodes={diagnosisCodes}
+          setDiagnosisCodes={setDiagnosisCodes}
         />
 
         {type === "HealthCheck" ? (
-          <TextField
-            label="*Healthcheck Rating"
-            fullWidth
-            value={healthCheckRating || 0}
-            onChange={({ target }) =>
-              setHealthCheckRating(Number(target.value))
-            }
-            style={{ margin: "5px 0" }}
-          />
+          <>
+            <InputLabel>Healthcheck Rating</InputLabel>
+            <Select
+              value={healthCheckRating}
+              fullWidth
+              onChange={({ target }) =>
+                setHealthCheckRating(Number(target.value))
+              }
+              style={{ margin: "5px 0" }}
+            >
+              <MenuItem value={0}>0</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </>
         ) : type === "Hospital" ? (
           <>
             <TextField
+              type="date"
               label="*Discharge Date"
+              InputLabelProps={{ shrink: true }}
               fullWidth
               value={dischargeDate}
               onChange={({ target }) => setDischargeDate(target.value)}
@@ -151,14 +158,18 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               style={{ margin: "5px 0" }}
             />
             <TextField
+              type="date"
               label="Sick Leave From Date"
+              InputLabelProps={{ shrink: true }}
               fullWidth
               value={startDate}
               onChange={({ target }) => setStartDate(target.value)}
               style={{ margin: "5px 0" }}
             />
             <TextField
+              type="date"
               label="Sick Leave Till Date"
+              InputLabelProps={{ shrink: true }}
               fullWidth
               value={endDate}
               onChange={({ target }) => setEndDate(target.value)}

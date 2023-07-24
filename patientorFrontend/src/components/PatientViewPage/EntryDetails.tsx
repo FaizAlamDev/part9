@@ -31,7 +31,7 @@ const EntryDetails = ({
           </div>
           {children}
           <div>
-            {entry.sickLeave ? (
+            {entry.sickLeave?.startDate ? (
               <p>
                 SickLeave from: {entry.sickLeave.startDate} until:{" "}
                 {entry.sickLeave.endDate}{" "}
